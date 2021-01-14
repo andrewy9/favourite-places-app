@@ -6,12 +6,11 @@ import { fetchFruits } from '../actions'
 import Map from './Map'
 
 export class App extends React.Component {
-
-  componentDidMount() {
+  componentDidMount () {
     this.props.dispatch(fetchFruits())
   }
 
-  render() {
+  render () {
     return (
       <div className='app'>
         <h1>Fullstack Boilerplate</h1>
@@ -21,7 +20,7 @@ export class App extends React.Component {
   }
 }
 
-function mapStateToProps(globalState) {
+function mapStateToProps (globalState) {
   return {
     fruits: globalState.fruits
   }
