@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api'
 
 // import {formatRelative} from "date-fns"
-import { getFourSquare } from '../apis/fourSquare'
+import { fetchFourSquare } from '../actions'
 
 // Map Constants
 const libraries = ['places']
@@ -21,9 +21,14 @@ const options = {
 
 const city = 'Auckland'
 
-export default function Map () {
+export default function Map() {
+  const [place, setPlace] = useState('')
+  const [location, setLocation] = useState('')
+  const [lat, setLat] = useState()
+  const [lng, setLng] = useState()
+
   useEffect(() => {
-    getFourSquare(city)
+    fetchFourSquare(city)
   }, [])
 
   const { isLoaded, loadError } = useLoadScript({
