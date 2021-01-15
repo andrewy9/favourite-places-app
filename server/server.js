@@ -23,8 +23,6 @@ server.get('/api/v1/fourSquare/:city', (req, res) => {
     v: '20201206'
   }
 
-  console.log(process.env.REACT_APP_CLIENT_SECRET)
-
   request
     .get(endPoint + new URLSearchParams(parameters))
     .then(response =>

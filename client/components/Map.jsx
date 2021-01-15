@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-// import { connect } from 'react-redux'
+import { connect } from 'react-redux'
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api'
+import { fetchFourSquare, fetchFruits } from '../actions'
 
 // import {formatRelative} from "date-fns"
-import { fetchFourSquare } from '../actions'
 
 // Map Constants
 const libraries = ['places']
@@ -18,17 +18,18 @@ const center = {
 const options = {
   zoomControl: true
 }
-
 const city = 'Auckland'
 
-export default function Map() {
+function Map(props) {
   const [place, setPlace] = useState('')
   const [location, setLocation] = useState('')
   const [lat, setLat] = useState()
   const [lng, setLng] = useState()
 
   useEffect(() => {
-    fetchFourSquare(city)
+    console.log('Map.useEffect: dispatching actions')
+    props.dispatch(fetchFourSquare(city))
+    props.dispatch(fetchFruits())
   }, [])
 
   const { isLoaded, loadError } = useLoadScript({
@@ -51,3 +52,13 @@ export default function Map() {
     </div>
   )
 }
+
+function mapStateToProps(globalState) {
+  const places = globalState
+  console.log('mapState: ', globalState)
+  return {
+    places,
+  }
+}
+
+export default connect(mapStateToProps)(Map)

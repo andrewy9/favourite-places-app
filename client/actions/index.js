@@ -7,6 +7,7 @@ export const SET_PLACES = 'SET_PLACES'
 
 //FourSquares Actions
 export function setPlaces(places) {
+  console.log('action: dispatch API data to reducer')
   return {
     type: SET_PLACES,
     places
@@ -14,9 +15,11 @@ export function setPlaces(places) {
 }
 
 export function fetchFourSquare(city) {
+  console.log('action: fetchFourSquare')
   return dispatch => {
     getFourSquare(city)
       .then(places => {
+        console.log('action: received API data from the serverside: ', places)
         dispatch(setPlaces(places))
         return null
       })

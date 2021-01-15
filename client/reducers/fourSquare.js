@@ -1,13 +1,15 @@
 import { SET_PLACES } from '../actions'
 
+const initialState = []
 
-const places = (state = [], action) => {
+const reducer = (state = initialState, action) => {
+  console.log('reducer: reducing API data and dispatching to global state')
   switch (action.type) {
     case SET_PLACES:
-      return action.trips
+      return action.places
     default:
       return state
   }
 }
 
-export default places
+export default reducer
