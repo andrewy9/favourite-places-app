@@ -11,24 +11,20 @@ const mapContainerStyle = {
   width: '100vw',
   height: '100vh'
 }
-const center = {
-  lat: -36.848461,
-  lng: 174.763336
-}
+
 const options = {
   zoomControl: true
 }
-const city = 'Auckland'
 
-function Map(props) {
-  const [place, setPlace] = useState('')
-  const [location, setLocation] = useState('')
-  const [lat, setLat] = useState()
-  const [lng, setLng] = useState()
+function Map (props) {
+  const [clickedPlace, setClickedPlace] = useState('') // The place you just clicked
+  const [markedPlaces, setMarkedPlaces] = useState([]) // Places around your location
+  const [location, setLocation] = useState('Auckland') // Where the map search starts
+  const [latLng, setLatLng] = useState({ lat: -36.848461, lng: 174.763336 })
 
   useEffect(() => {
     console.log('Map.useEffect: dispatching actions')
-    props.dispatch(fetchFourSquare(city))
+    props.dispatch(fetchFourSquare(location))
     props.dispatch(fetchFruits())
   }, [])
 
@@ -46,18 +42,27 @@ function Map(props) {
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={8}
-        center={center}
+        center={latLng}
         options={options}
-      ></GoogleMap>
+      >
+        {props.places.map(markedPlace => (
+          <div>
+            <Marker
+              key={markedPlace.id}
+              position={{ lat: markedPlace.location.lat, lng: markedPlace.location.lng }}
+            />
+          </div>
+        ))}
+      </GoogleMap>
     </div>
   )
 }
 
-function mapStateToProps(globalState) {
-  const places = globalState
-  console.log('mapState: ', globalState)
+function mapStateToProps (globalState) {
+  const places = globalState.places.map(el => el.venue)
+  console.log('mapState: ', places)
   return {
-    places,
+    places
   }
 }
 

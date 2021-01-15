@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Map from './Map'
 
 export class App extends React.Component {
-  render() {
+  render () {
     return (
       <div className='app'>
         <h1>Fullstack Boilerplate</h1>
@@ -14,10 +14,10 @@ export class App extends React.Component {
   }
 }
 
-function mapStateToProps(globalState) {
+function mapStateToProps (globalState) {
   const places = globalState
   return {
-    places,
+    places
   }
 }
 
