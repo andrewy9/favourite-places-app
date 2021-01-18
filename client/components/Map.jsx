@@ -16,15 +16,31 @@ const options = {
   zoomControl: true
 }
 
-function Map (props) {
+function Map(props) {
   const [clickedPlace, setClickedPlace] = useState('') // The place you just clicked
-  const [markedPlaces, setMarkedPlaces] = useState([]) // Places around your location
-  const [location, setLocation] = useState('Auckland') // Where the map search starts
+  const [currentPosition, setCurrentPosition] = useState({}) // Places around your location
+  const [position, setPosition] = useState('Auckland') // Where the map search starts
   const [latLng, setLatLng] = useState({ lat: -36.848461, lng: 174.763336 })
+
+  const getPosition = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(getCoordinates);
+    } else {
+      alert('Sorry! Your browser does not support Geo location.')
+    }
+  }
+
+  const getCoordinates = (position) => {
+    console.log(position)
+    setLatLng({
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+    })
+  }
 
   useEffect(() => {
     console.log('Map.useEffect: dispatching actions')
-    props.dispatch(fetchFourSquare(location))
+    props.dispatch(fetchFourSquare(position))
     props.dispatch(fetchFruits())
   }, [])
 
@@ -39,6 +55,8 @@ function Map (props) {
   return (
     <div>
       <h1>Favourite Places</h1>
+      <button onClick={getPosition}>button</button>
+      {console.log('testing')}
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={8}
@@ -58,7 +76,7 @@ function Map (props) {
   )
 }
 
-function mapStateToProps (globalState) {
+function mapStateToProps(globalState) {
   const places = globalState.places.map(el => el.venue)
   console.log('mapState: ', places)
   return {
