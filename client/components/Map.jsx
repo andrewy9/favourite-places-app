@@ -18,31 +18,50 @@ const options = {
 
 function Map(props) {
   const [clickedPlace, setClickedPlace] = useState('') // The place you just clicked
-  const [currentPosition, setCurrentPosition] = useState({}) // Places around your location
-  const [position, setPosition] = useState('Auckland') // Where the map search starts
-  const [latLng, setLatLng] = useState({ lat: -36.848461, lng: 174.763336 })
+  const [position, setPosition] = useState('Auckland') // City where the map will search places around
+  const [latLng, setLatLng] = useState({ lat: -36.848461, lng: 174.763336 }) // Coorinate where the map will search places around
+
+  useEffect(() => {
+    if (!position) {
+      props.dispatch(fetchFourSquare(latLng))
+    } else {
+      props.dispatch(fetchFourSquare(position))
+    }
+    props.dispatch(fetchFruits())
+  }, [position, latLng])
 
   const getPosition = () => {
     if (navigator.geolocation) {
+      setPosition('')
       navigator.geolocation.getCurrentPosition(getCoordinates);
     } else {
-      alert('Sorry! Your browser does not support Geo location.')
+      alert('Your browser does not support Geo location.')
     }
   }
 
   const getCoordinates = (position) => {
-    console.log(position)
     setLatLng({
       lat: position.coords.latitude,
       lng: position.coords.longitude,
     })
   }
 
-  useEffect(() => {
-    console.log('Map.useEffect: dispatching actions')
-    props.dispatch(fetchFourSquare(position))
-    props.dispatch(fetchFruits())
-  }, [])
+  const handleChange = (e) => {
+    setPosition(e.target.value)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (position === 'Wellington') {
+      setLatLng({ lat: -41.28664, lng: 174.77557 })
+    } else if (position === 'Christchurch') {
+      setLatLng({ lat: -43.525650, lng: 172.639847 })
+    } else if (position === 'Melbourne') {
+      setLatLng({ lat: -37.813629, lng: 144.963058 })
+    } else if (position === 'Auckland') {
+      setLatLng({ lat: -36.848461, lng: 174.763336 })
+    }
+  }
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: 'AIzaSyBh_FVhVkRrg3kXqR6FkWOO7K35RSzxVl4',
@@ -55,11 +74,26 @@ function Map(props) {
   return (
     <div>
       <h1>Favourite Places</h1>
-      <button onClick={getPosition}>button</button>
-      {console.log('testing')}
+      <button onClick={getPosition}>Current Location</button>
+      <form onSubmit={handleSubmit}>
+        <div className="dropdown">
+          <label className="dropbtn">you are in...</label>
+
+          <select className="dropdown-content" name='citySelector' onChange={handleChange}>
+            <option value='Auckland'>auckland</option>
+            <option value='Wellington'>wellington</option>
+            <option value='Christchurch'>christchurch</option>
+            <option value='Melbourne'>melbourne</option>
+          </select>
+        </div>
+        <button type='submit' className='submit'>
+          submit
+          </button>
+      </form>
+      {console.log('rendered page')}
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        zoom={8}
+        zoom={12}
         center={latLng}
         options={options}
       >
@@ -78,7 +112,6 @@ function Map(props) {
 
 function mapStateToProps(globalState) {
   const places = globalState.places.map(el => el.venue)
-  console.log('mapState: ', places)
   return {
     places
   }
