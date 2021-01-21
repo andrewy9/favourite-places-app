@@ -53,23 +53,23 @@ function Map(props) {
 
   const panMap = (pos) => {
     if (pos === 'Wellington') {
-      setLatLng({ lat: -41.28664, lng: 174.77557 })
+      setLatLng({ lat: -41.28664, lng: 174.77557 });
     } else if (pos === 'Christchurch') {
-      setLatLng({ lat: -43.525650, lng: 172.639847 })
+      setLatLng({ lat: -43.525650, lng: 172.639847 });
     } else if (pos === 'Melbourne') {
-      setLatLng({ lat: -37.813629, lng: 144.963058 })
+      setLatLng({ lat: -37.813629, lng: 144.963058 });
     } else if (pos === 'Auckland') {
-      setLatLng({ lat: -36.848461, lng: 174.763336 })
+      setLatLng({ lat: -36.848461, lng: 174.763336 });
     }
   }
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: 'AIzaSyBh_FVhVkRrg3kXqR6FkWOO7K35RSzxVl4',
     libraries
-  })
+  });
 
-  if (loadError) return 'Error loading Maps'
-  if (!isLoaded) return 'Loading Maps'
+  if (loadError) return 'Error loading Maps';
+  if (!isLoaded) return 'Loading Maps';
 
   return (
     <div>
@@ -98,16 +98,19 @@ function Map(props) {
           <Marker
             key={markedPlace.id}
             position={{ lat: markedPlace.location.lat, lng: markedPlace.location.lng }}
-            onClick={(e) => {
-              setClickedPlace(markedPlace)
+            onClick={() => {
+              setClickedPlace(markedPlace);
             }}
           />
         ))}
-        {clickedPlace && (
+        {clickedPlace ? (
           <InfoWindow
             position={{
               lat: clickedPlace.location.lat,
               lng: clickedPlace.location.lng
+            }}
+            onCloseClick={() => {
+              setClickedPlace('');
             }}
           >
             <div className='infoWindow'>
@@ -116,7 +119,7 @@ function Map(props) {
             </div>
 
           </InfoWindow>
-        )}
+        ) : null}
       </GoogleMap>
     </div>
   )
