@@ -17,18 +17,19 @@ const options = {
 }
 
 function Map(props) {
+  const [interest, setInterest] = useState('coffee') //The interest you selected
   const [clickedPlace, setClickedPlace] = useState('') // The place you just clicked
   const [position, setPosition] = useState('Auckland') // City where the map will search places around
   const [latLng, setLatLng] = useState({ lat: -36.848461, lng: 174.763336 }) // Coorinate where the map will search places around
 
   useEffect(() => {
     if (!position) {
-      props.dispatch(fetchFourSquare(latLng))
+      props.dispatch(fetchFourSquare(latLng, interest))
     } else {
-      props.dispatch(fetchFourSquare(position))
+      props.dispatch(fetchFourSquare(position, interest))
     }
     props.dispatch(fetchFruits())
-  }, [position, latLng])
+  }, [position, latLng, interest])
 
   const getPosition = () => {
     if (navigator.geolocation) {
@@ -46,7 +47,7 @@ function Map(props) {
     })
   }
 
-  const handleChange = (e) => {
+  const handleCityChange = (e) => {
     setPosition(e.target.value)
     panMap(e.target.value)
   }
@@ -61,6 +62,10 @@ function Map(props) {
     } else if (pos === 'Auckland') {
       setLatLng({ lat: -36.848461, lng: 174.763336 });
     }
+  }
+
+  const handleInterestChange = (e) => {
+    setInterest(e.target.value)
   }
 
   const { isLoaded, loadError } = useLoadScript({
@@ -79,7 +84,7 @@ function Map(props) {
         <div className="dropdown">
           <label className="dropbtn">you are in...</label>
 
-          <select className="dropdown-content" name='citySelector' onChange={handleChange}>
+          <select className="dropdown-content" name='citySelector' onChange={handleCityChange}>
             <option value='Auckland'>auckland</option>
             <option value='Wellington'>wellington</option>
             <option value='Christchurch'>christchurch</option>
@@ -87,10 +92,23 @@ function Map(props) {
           </select>
         </div>
       </form>
+      <form>
+        <div className="dropdown">
+          <label className="dropbtn">you are looking for...</label>
+          <select className="dropdown-content" name='interestSelector' onChange={handleInterestChange}>
+            <option value='coffee'>coffee</option>
+            <option value='food'>food</option>
+            <option value='shops'>shops</option>
+            <option value='outdoors'>outdoors</option>
+            <option value='sights'>sights</option>
+            <option value='trending'>trending</option>
+          </select>
+        </div>
+      </form>
       {console.log('rendered page')}
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        zoom={12}
+        zoom={14}
         center={latLng}
         options={options}
       >

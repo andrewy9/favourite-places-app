@@ -12,9 +12,9 @@ export function setPlaces(places) {
   }
 }
 
-export function fetchFourSquare(city) {
+export function fetchFourSquare(position, interest) {
   return dispatch => {
-    getFourSquare(city)
+    getFourSquare(position, interest)
       .then(places => {
         dispatch(setPlaces(places))
         return null
