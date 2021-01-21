@@ -45,6 +45,12 @@ function Map(props) {
       lng: position.coords.longitude,
     })
   }
+
+  const handleChange = (e) => {
+    setPosition(e.target.value)
+    panMap(e.target.value)
+  }
+
   const panMap = (pos) => {
     if (pos === 'Wellington') {
       setLatLng({ lat: -41.28664, lng: 174.77557 })
@@ -56,12 +62,6 @@ function Map(props) {
       setLatLng({ lat: -36.848461, lng: 174.763336 })
     }
   }
-
-  const handleChange = (e) => {
-    setPosition(e.target.value)
-    panMap(e.target.value)
-  }
-
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: 'AIzaSyBh_FVhVkRrg3kXqR6FkWOO7K35RSzxVl4',
@@ -95,13 +95,28 @@ function Map(props) {
         options={options}
       >
         {props.places.map(markedPlace => (
-          <div>
-            <Marker
-              key={markedPlace.id}
-              position={{ lat: markedPlace.location.lat, lng: markedPlace.location.lng }}
-            />
-          </div>
+          <Marker
+            key={markedPlace.id}
+            position={{ lat: markedPlace.location.lat, lng: markedPlace.location.lng }}
+            onClick={(e) => {
+              setClickedPlace(markedPlace)
+            }}
+          />
         ))}
+        {clickedPlace && (
+          <InfoWindow
+            position={{
+              lat: clickedPlace.location.lat,
+              lng: clickedPlace.location.lng
+            }}
+          >
+            <div className='infoWindow'>
+              <h2>{clickedPlace.name}</h2>
+              <h2>{clickedPlace.location.formattedAddress}</h2>
+            </div>
+
+          </InfoWindow>
+        )}
       </GoogleMap>
     </div>
   )
