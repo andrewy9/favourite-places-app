@@ -45,23 +45,23 @@ function Map(props) {
       lng: position.coords.longitude,
     })
   }
-
-  const handleChange = (e) => {
-    setPosition(e.target.value)
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (position === 'Wellington') {
+  const panMap = (pos) => {
+    if (pos === 'Wellington') {
       setLatLng({ lat: -41.28664, lng: 174.77557 })
-    } else if (position === 'Christchurch') {
+    } else if (pos === 'Christchurch') {
       setLatLng({ lat: -43.525650, lng: 172.639847 })
-    } else if (position === 'Melbourne') {
+    } else if (pos === 'Melbourne') {
       setLatLng({ lat: -37.813629, lng: 144.963058 })
-    } else if (position === 'Auckland') {
+    } else if (pos === 'Auckland') {
       setLatLng({ lat: -36.848461, lng: 174.763336 })
     }
   }
+
+  const handleChange = (e) => {
+    setPosition(e.target.value)
+    panMap(e.target.value)
+  }
+
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: 'AIzaSyBh_FVhVkRrg3kXqR6FkWOO7K35RSzxVl4',
@@ -75,7 +75,7 @@ function Map(props) {
     <div>
       <h1>Favourite Places</h1>
       <button onClick={getPosition}>Current Location</button>
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="dropdown">
           <label className="dropbtn">you are in...</label>
 
@@ -86,9 +86,6 @@ function Map(props) {
             <option value='Melbourne'>melbourne</option>
           </select>
         </div>
-        <button type='submit' className='submit'>
-          submit
-          </button>
       </form>
       {console.log('rendered page')}
       <GoogleMap
