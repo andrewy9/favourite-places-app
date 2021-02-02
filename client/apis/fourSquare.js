@@ -2,10 +2,11 @@ import request from 'superagent'
 
 export const getFourSquare = (position, interest) => {
   if (position.lat) {
+    console.log(position, interest)
     return request
       .get(`/api/v1/fourSquare/${position.lat},${position.lng}/${interest}`)
       .then(response => {
-        console.log('apis: received api data: ', response.body.response.groups[0].items)
+        console.log(response)
         return response.body.response.groups[0].items
       })
       .catch(error => {

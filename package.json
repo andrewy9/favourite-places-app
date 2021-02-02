@@ -8,8 +8,8 @@
   ],
   "scripts": {
     "start": "node server",
-    "test": "jest",
-    "test:watch": "jest --noStackTrace --watchAll",
+    "test": "jest --coverage",
+    "test:watch": "jest --noStackTrace --watchAll --coverage",
     "dev": "run-p dev:client dev:server",
     "dev:client": "npm run webpack -- --watch",
     "dev:server": "nodemon --watch server server/index.js",
@@ -30,12 +30,6 @@
       "@babel/plugin-proposal-object-rest-spread"
     ]
   },
-  "jest": {
-    "setupFiles": [
-      "./client/testing/jsdom.js",
-      "./client/testing/enzyme.js"
-    ]
-  },
   "eslintConfig": {
     "extends": "eda",
     "ignorePatterns": [
@@ -48,6 +42,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "knex": "^0.21.12",
+    "nock": "^13.0.7",
     "pg": "^8.5.1",
     "superagent": "^6.1.0",
     "use-places-autocomplete": "^1.7.1"
