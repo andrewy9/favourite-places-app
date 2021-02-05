@@ -1,23 +1,27 @@
+require('dotenv').config()
 import { getFourSquare } from './fourSquare'
-import supertest from 'supertest'
-import { fetchFourSquare } from '../actions/index'
 import nock from 'nock'
 
 describe('getFourSquare', () => {
-  const mockVenue = [{
-    body: {
-      response: {
-        groups: [
-          { items: 'hello' }
-        ]
-      }
-    }
-  }]
+  const mockVenue = ['mockedVenue']
 
-  const position = { lat: -36.848461, lng: 179.763336 }
+  const position = 'Auckland'
   const interest = 'coffee'
+  const endPoint = '/v2/venues/explore?'
+  const parameters = {
+    client_id: process.env.FOURSQUARE_CLIENT_ID,
+    client_secret: process.env.FOURSQUARE_CLIENT_SECRET,
+    section: interest,
+    near: position,
+    v: '20201206'
+  }
+
+  beforeEach(function () {
+    nock.cleanAll();
+  })
+
   const scope = nock('https://api.foursquare.com')
-    .get(`/v2/venues/explore?client`)
+    .get(endPoint + new URLSearchParams(parameters))
     .reply(200, mockVenue)
 
   test('return venues from api', () => {
