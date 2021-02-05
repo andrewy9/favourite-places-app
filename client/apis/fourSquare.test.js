@@ -16,20 +16,17 @@ describe('getFourSquare', () => {
     v: '20201206'
   }
 
-  beforeEach(function () {
-    nock.cleanAll();
-  })
-
-  const scope = nock('https://api.foursquare.com')
-    .get(endPoint + new URLSearchParams(parameters))
-    .reply(200, mockVenue)
+  const scope = nock('http://localhost')
+    .get('/api/v1/fourSquare/Auckland/coffee')
+    .reply(200, {response: {groups: [{items: mockVenue}]}})
 
   test('return venues from api', () => {
     expect.assertions(2)
     return getFourSquare(position, interest)
       .then(venue => {
-        expect(venue).toEqual(mockVenue)
         expect(scope.isDone()).toBe(true)
+        console.log(venue)
+        expect(venue).toEqual(mockVenue)
       })
   })
 })
