@@ -4,7 +4,6 @@ import nock from 'nock'
 
 describe('getFourSquare', () => {
   const mockVenue = ['mockedVenue']
-
   const position = 'Auckland'
   const interest = 'coffee'
 
