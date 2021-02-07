@@ -19,21 +19,21 @@ const options = {
 function Map(props) {
   const [interest, setInterest] = useState('coffee') //The interest you selected
   const [clickedPlace, setClickedPlace] = useState('') // The place you just clicked
-  const [position, setPosition] = useState('Auckland') // City where the map will search places around
+  const [city, setCity] = useState('Auckland') // City where the map will search places around
   const [latLng, setLatLng] = useState({ lat: -36.848461, lng: 174.763336 }) // Coorinate where the map will search places around
 
   useEffect(() => {
-    if (!position) {
+    if (!city) {
       props.dispatch(fetchFourSquare(latLng, interest))
     } else {
-      props.dispatch(fetchFourSquare(position, interest))
+      props.dispatch(fetchFourSquare(city, interest))
     }
     props.dispatch(fetchFruits())
-  }, [position, latLng, interest])
+  }, [city, latLng, interest])
 
   const getPosition = () => {
     if (navigator.geolocation) {
-      setPosition('')
+      setCity('')
       navigator.geolocation.getCurrentPosition(getCoordinates);
     } else {
       alert('Your browser does not support Geo location.')
@@ -48,7 +48,7 @@ function Map(props) {
   }
 
   const handleCityChange = (e) => {
-    setPosition(e.target.value)
+    setCity(e.target.value)
     panMap(e.target.value)
   }
 
