@@ -40,6 +40,10 @@ function Map(props) {
     }
   }
 
+  const savePlace = () => {
+    console.log(clickedPlace.location.formattedAddress)
+  }
+
   const getCoordinates = (position) => {
     setLatLng({
       lat: position.coords.latitude,
@@ -133,7 +137,8 @@ function Map(props) {
           >
             <div className='infoWindow'>
               <h2>{clickedPlace.name}</h2>
-              <h2>{clickedPlace.location.formattedAddress}</h2>
+              <h2>{clickedPlace.location.formattedAddress.join(', ')}</h2>
+              <button onClick={savePlace} >Save</button>
             </div>
 
           </InfoWindow>
