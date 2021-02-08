@@ -1,22 +1,29 @@
 const connection = require('./connection')
 
-function getSavedPlaces(db = connection) {
+const getSavedPlaces = (db = connection) => {
   return db('savedPlaces').select()
 }
 
-function getSavedPlacesById(id, db = connection) {
+const getSavedPlacesById = (id, db = connection) => {
   return db('savedPlaces')
     .select()
     .where('id', id)
 }
 
-function addSavedPlaces(id, name, address, db = connection) {
+const addSavedPlace = (id, name, address, db = connection) => {
   return db('savedPlaces')
     .insert({ id, name, address })
+}
+
+const deleteSavedPlace = (id, db = connection) => {
+  return db('savedPlaces')
+    .delete()
+    .where('id', id)
 }
 
 module.exports = {
   getSavedPlaces,
   getSavedPlacesById,
-  addSavedPlaces
+  addSavedPlace,
+  deleteSavedPlace
 }
