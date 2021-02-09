@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api'
-import { fetchFourSquare, fetchFruits } from '../actions'
+import { fetchFourSquare, fetchFruits, addSavedPlace as savePlace } from '../actions'
 
 // import {formatRelative} from "date-fns"
 
@@ -40,8 +40,10 @@ function Map(props) {
     }
   }
 
-  const savePlace = () => {
-    console.log(clickedPlace.location.formattedAddress)
+  const saveHandler = () => {
+    const savedPlaceName = clickedPlace.name
+    const savedPlaceAddress = clickedPlace.location.formattedAddress.join(', ')
+    props.dispatch(savePlace(savedPlaceName, savedPlaceAddress))
   }
 
   const getCoordinates = (position) => {
@@ -54,6 +56,14 @@ function Map(props) {
   const handleCityChange = (e) => {
     setCity(e.target.value)
     panMap(e.target.value)
+  }
+
+  const test = () => {
+    if (props.newPlace.exists === clickedPlace.location.formattedAddress.join(', ')) {
+      return <h2>Already Saved</h2>
+    } else if (props.newPlace.exists !== clickedPlace.location.formattedAddress.join(', ')) {
+      return <h2>Saved</h2>
+    }
   }
 
   const panMap = (pos) => {
@@ -138,7 +148,9 @@ function Map(props) {
             <div className='infoWindow'>
               <h2>{clickedPlace.name}</h2>
               <h2>{clickedPlace.location.formattedAddress.join(', ')}</h2>
-              <button onClick={savePlace} >Save</button>
+              <button onClick={saveHandler} >Save</button>
+              {/* {props.newPlace.exists === clickedPlace.location.formattedAddress.join(', ') ? <h2>Already Saved</h2> : null} */}
+              {test()}
             </div>
 
           </InfoWindow>
@@ -150,8 +162,10 @@ function Map(props) {
 
 function mapStateToProps(globalState) {
   const places = globalState.places.map(el => el.venue)
+  const newPlace = globalState.newPlace
   return {
-    places
+    places,
+    newPlace
   }
 }
 

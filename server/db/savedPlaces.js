@@ -10,9 +10,9 @@ const getSavedPlacesById = (id, db = connection) => {
     .where('id', id)
 }
 
-const addSavedPlace = (id, name, address, db = connection) => {
+const postSavedPlace = (name, address, db = connection) => {
   return db('savedPlaces')
-    .insert({ id, name, address })
+    .insert({ name, address })
 }
 
 const deleteSavedPlace = (id, db = connection) => {
@@ -24,6 +24,6 @@ const deleteSavedPlace = (id, db = connection) => {
 module.exports = {
   getSavedPlaces,
   getSavedPlacesById,
-  addSavedPlace,
+  postSavedPlace,
   deleteSavedPlace
 }
