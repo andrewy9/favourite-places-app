@@ -33,8 +33,8 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  const { id, name, address } = req.body
-  db.addSavedPlace(id, name, address)
+  let { savedPlaceName, savedPlaceAddress } = req.body
+  db.postSavedPlace(savedPlaceName, savedPlaceAddress)
     .then(results => {
       db.getSavedPlacesById(results)
         .then(newPlace => {

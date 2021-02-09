@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api'
-import { fetchFourSquare, fetchFruits } from '../actions'
+import { fetchFourSquare, fetchFruits, addSavedPlace as saveNewPlace } from '../actions'
 
 // import {formatRelative} from "date-fns"
 
@@ -41,7 +41,9 @@ function Map(props) {
   }
 
   const savePlace = () => {
-    console.log(clickedPlace.location.formattedAddress)
+    const savedPlaceName = clickedPlace.name
+    const savedPlaceAddress = clickedPlace.location.formattedAddress.join(', ')
+    props.dispatch(saveNewPlace(savedPlaceName, savedPlaceAddress))
   }
 
   const getCoordinates = (position) => {
