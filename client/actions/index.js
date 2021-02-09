@@ -4,6 +4,7 @@ import { postSavedPlace } from '../apis/savedPlaces'
 
 export const SET_FRUITS = 'SET_FRUITS'
 export const SET_PLACES = 'SET_PLACES'
+export const ADD_PLACE = 'ADD_PLACE'
 
 // FourSquares Actions
 export function setPlaces(places) {
@@ -24,12 +25,19 @@ export function fetchFourSquare(position, interest) {
 }
 
 //SavedPlaces Actions
+export function addPlace(place) {
+  return {
+    type: ADD_PLACE,
+    place
+  }
+}
+
 export function addSavedPlace(savedPlaceName, savedPlaceAddress) {
   console.log(savedPlaceName, savedPlaceAddress)
   return dispatch => {
     postSavedPlace(savedPlaceName, savedPlaceAddress)
-      .then(places => {
-        console.log(places)
+      .then(place => {
+        dispatch(addPlace(place))
       })
   }
 }

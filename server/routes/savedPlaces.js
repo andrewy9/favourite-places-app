@@ -19,7 +19,6 @@ router.get('/:id', (req, res) => {
     .then(results => {
       const found = results.some(el => el.id === parseInt(id))
       if (found) {
-        console.log(found)
         res.json({ results })
       } else {
         console.log(found)
@@ -33,21 +32,33 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  let { savedPlaceName, savedPlaceAddress } = req.body
-  db.postSavedPlace(savedPlaceName, savedPlaceAddress)
+  const { savedPlaceName, savedPlaceAddress } = req.body
+  db.getSavedPlaces()
     .then(results => {
-      db.getSavedPlacesById(results)
-        .then(newPlace => {
-          res.json({ newPlace })
-        })
+      let found = results.some(el => el.address === savedPlaceAddress)
+      if (!found) {
+        db.postSavedPlace(savedPlaceName, savedPlaceAddress)
+          .then(result => {
+            db.getSavedPlacesById(result)
+              .then(newPlace => {
+                res.json({ newPlace })
+              })
+          })
+      } else {
+        res.json({ exists: savedPlaceAddress, msg: 'this place is already saved' })
+      }
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({ message: 'Somthing went wrong' })
     })
 })
 
 router.delete('/:id', (req, res) => {
-  const id = req.params.id
+  let id = req.params.id
   db.getSavedPlacesById(id)
     .then((results) => {
-      const found = results.some(el => el.id === parseInt(id))
+      let found = results.some(el => el.id === parseInt(id))
       if (found) {
         db.deleteSavedPlace(id)
           .then(() => {
