@@ -149,8 +149,6 @@ function Map(props) {
               <h2>{clickedPlace.name}</h2>
               <h2>{clickedPlace.location.formattedAddress.join(', ')}</h2>
               <button onClick={saveHandler} >Save</button>
-              {/* {props.newPlace.exists === clickedPlace.location.formattedAddress.join(', ') ? <h2>Already Saved</h2> : null} */}
-              {test()}
             </div>
 
           </InfoWindow>
