@@ -3,7 +3,7 @@ An application which provides visual suggestions of multiple venues to visit bas
 The application will also allow the user to to create a profile and then log in so that they can save and manage their favourite places.
 
 ## Key technologies
-*React.js - The application is a React project with multiple layers of components, which will allow easier management as the application scales up over time.
+**React.js - The application is a React project with multiple layers of components, which will allow easier management as the application scales up over time.
 *Reudx.js - The use of global state will allow easier feed of information between different React components.
 *@React-testing-library & Jest - Allows developers to create unit tests for their react components.
 *GoogleMap API - Provides visual representation of user's location and surrounding venues. The React-Google-Map module allows cleaner integration of the API.
