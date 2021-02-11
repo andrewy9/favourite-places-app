@@ -1,6 +1,6 @@
 # Full-stack React project
-A Map which suggests multiple venues to visit around user's location, and interests.
-The application will allow the user to to create a profile and then log in so that they can save and manage their favourite places.
+An application which provides visual suggestions of multiple venues to visit based on the users current location and interests.
+The application will also allow the user to to create a profile and then log in so that they can save and manage their favourite places.
 
 ## Key technologies
 React.js - The application is a React project with multiple layers of components, which will allow easier management as the application scales up over time.
