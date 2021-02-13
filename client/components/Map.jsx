@@ -152,26 +152,6 @@ function Map(props) {
               {
                 props.savedPlaces.some(el => el.address === clickedPlace.address) ? <h3>Already Saved</h3> : <button onClick={saveHandler} >Save</button>}
 
-
-              {/* {
-                [
-                  {
-                    "id": 1,
-                    "name": "Little Bird Unbakery",
-                    "address": "1a Summer St (Ponsonby Road), Ponsonby, New Zealand"
-                  },
-                  {
-                    "id": 2,
-                    "name": "Chocolate Boutique",
-                    "address": "323 Parnell Rd, Parnell 1052, New Zealand"
-                  },
-                  {
-                    "id": 3,
-                    "name": "Twenty Three",
-                    "address": "23 Mt Eden Rd (at Nikau St), Auckland, New Zealand"
-                  }
-                ].some(el => el.address === clickedPlace.address) ? <h3>Already Saved</h3> : <button onClick={saveHandler} >Save</button>} */}
-
             </div>
 
           </InfoWindow>

@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">21.05% </span>
+                <span class="strong">37.14% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>8/38</span>
+                <span class='fraction'>13/35</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">26.67% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>4/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">22.22% </span>
+                <span class="strong">39.39% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>8/36</span>
+                <span class='fraction'>13/33</span>
             </div>
         
             
@@ -121,21 +121,17 @@
 <a name='L62'></a><a href='#L62'>62</a>
 <a name='L63'></a><a href='#L63'>63</a>
 <a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L65'></a><a href='#L65'>65</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -146,26 +142,24 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -195,14 +189,13 @@
 const db = require('../db/savedPlaces')
 const router = express.Router()
 &nbsp;
-router.get('/', <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >  db.getSavedPlaces()</span>
-    .then(<span class="fstat-no" title="function not covered" >re</span>sults =&gt; {
-<span class="cstat-no" title="statement not covered" >      res.json({ results })</span>
+router.get('/', (req, res) =&gt; {
+  db.getSavedPlaces()
+    .then(results =&gt; {
+      res.json(results)
     })
-    .catch(<span class="fstat-no" title="function not covered" >er</span>r =&gt; {
-<span class="cstat-no" title="statement not covered" >      console.log(err)</span>
-<span class="cstat-no" title="statement not covered" >      res.status(500).json({ message: 'Somthing went wrong' })</span>
+    .catch(err =&gt; {
+      res.status(500).json({ message: 'Somthing went wrong' })
     })
 })
 &nbsp;
@@ -212,35 +205,33 @@ router.get('/:id', <span class="fstat-no" title="function not covered" >(r</span
     .then(<span class="fstat-no" title="function not covered" >re</span>sults =&gt; {
       const found = <span class="cstat-no" title="statement not covered" >results.some(<span class="fstat-no" title="function not covered" >el</span> =&gt; <span class="cstat-no" title="statement not covered" >el.id === parseInt(id))</span></span>
 <span class="cstat-no" title="statement not covered" >      if (found) {</span>
-<span class="cstat-no" title="statement not covered" >        console.log(found)</span>
-<span class="cstat-no" title="statement not covered" >        res.json({ results })</span>
+<span class="cstat-no" title="statement not covered" >        res.json(results)</span>
       } else {
 <span class="cstat-no" title="statement not covered" >        console.log(found)</span>
 <span class="cstat-no" title="statement not covered" >        res.status(400).json({ msg: 'the id does not exist' })</span>
       }
     })
     .catch(<span class="fstat-no" title="function not covered" >er</span>r =&gt; {
-<span class="cstat-no" title="statement not covered" >      console.log(err)</span>
 <span class="cstat-no" title="statement not covered" >      res.status(500).json({ message: 'Somthing went wrong' })</span>
     })
 })
 &nbsp;
-router.post('/', <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; {
-  const { id, name, address } = <span class="cstat-no" title="statement not covered" >req.body</span>
-<span class="cstat-no" title="statement not covered" >  db.postSavedPlace(id, name, address)</span>
-    .then(<span class="fstat-no" title="function not covered" >re</span>sults =&gt; {
-<span class="cstat-no" title="statement not covered" >      db.getSavedPlacesById(results)</span>
-        .then(<span class="fstat-no" title="function not covered" >ne</span>wPlace =&gt; {
-<span class="cstat-no" title="statement not covered" >          res.json({ newPlace })</span>
-        })
+router.post('/', (req, res) =&gt; {
+  const { savedPlaceName, savedPlaceAddress } = req.body
+  db.postSavedPlace(savedPlaceName, savedPlaceAddress)
+    .then(<span class="fstat-no" title="function not covered" >(r</span>esult) =&gt; {
+<span class="cstat-no" title="statement not covered" >      res.status(201)</span>
+    })
+    .catch(<span class="fstat-no" title="function not covered" >er</span>r =&gt; {
+<span class="cstat-no" title="statement not covered" >      res.status(500).json(err)</span>
     })
 })
 &nbsp;
 router.delete('/:id', <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; {
-  const id = <span class="cstat-no" title="statement not covered" >req.params.id</span>
+  let id = <span class="cstat-no" title="statement not covered" >req.params.id</span>
 <span class="cstat-no" title="statement not covered" >  db.getSavedPlacesById(id)</span>
     .then(<span class="fstat-no" title="function not covered" >(r</span>esults) =&gt; {
-      const found = <span class="cstat-no" title="statement not covered" >results.some(<span class="fstat-no" title="function not covered" >el</span> =&gt; <span class="cstat-no" title="statement not covered" >el.id === parseInt(id))</span></span>
+      let found = <span class="cstat-no" title="statement not covered" >results.some(<span class="fstat-no" title="function not covered" >el</span> =&gt; <span class="cstat-no" title="statement not covered" >el.id === parseInt(id))</span></span>
 <span class="cstat-no" title="statement not covered" >      if (found) {</span>
 <span class="cstat-no" title="statement not covered" >        db.deleteSavedPlace(id)</span>
           .then(<span class="fstat-no" title="function not covered" >()</span> =&gt; {
@@ -265,7 +256,7 @@ module.exports = router
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Feb 09 2021 11:45:52 GMT+1300 (New Zealand Daylight Time)
+                at Sat Feb 13 2021 22:46:30 GMT+1300 (New Zealand Daylight Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

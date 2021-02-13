@@ -5,11 +5,9 @@ const router = express.Router()
 router.get('/', (req, res) => {
   db.getSavedPlaces()
     .then(results => {
-      console.log(results)
       res.json(results)
     })
     .catch(err => {
-      console.log(err)
       res.status(500).json({ message: 'Somthing went wrong' })
     })
 })
@@ -27,29 +25,18 @@ router.get('/:id', (req, res) => {
       }
     })
     .catch(err => {
-      console.log(err)
       res.status(500).json({ message: 'Somthing went wrong' })
     })
 })
 
 router.post('/', (req, res) => {
   const { savedPlaceName, savedPlaceAddress } = req.body
-  db.getSavedPlaces()
-    .then(results => {
-      let found = results.some(el => el.address === savedPlaceAddress)
-      if (!found) {
-        db.postSavedPlace(savedPlaceName, savedPlaceAddress)
-          .then((result) => {
-            res.status(201)
-          })
-      } else {
-        console.log('oopsie post')
-        res.status(400).json({ exists: savedPlaceAddress, msg: 'This place is already saved' })
-      }
+  db.postSavedPlace(savedPlaceName, savedPlaceAddress)
+    .then((result) => {
+      res.status(201)
     })
     .catch(err => {
-      console.log(err)
-      res.status(500).json({ message: 'Somthing went wrong' })
+      res.status(500).json(err)
     })
 })
 
