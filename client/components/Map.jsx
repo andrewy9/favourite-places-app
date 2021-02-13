@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api'
-import { fetchFourSquare, fetchSavedPlaces, addSavedPlace as savePlace } from '../actions'
+import { fetchFourSquare, fetchFruits, addSavedPlace as savePlace } from '../actions'
 
 // import {formatRelative} from "date-fns"
 
@@ -21,8 +21,6 @@ function Map(props) {
   const [clickedPlace, setClickedPlace] = useState('') // The place you just clicked
   const [city, setCity] = useState('Auckland') // City where the map will search places around
   const [latLng, setLatLng] = useState({ lat: -36.848461, lng: 174.763336 }) // Coorinate where the map will search places around
-  const [saveStatus, setSaveStatus] = useState(false)
-
 
   useEffect(() => {
     if (!city) {
@@ -30,7 +28,7 @@ function Map(props) {
     } else {
       props.dispatch(fetchFourSquare(city, interest))
     }
-    props.dispatch(fetchSavedPlaces())
+    props.dispatch(fetchFruits())
   }, [city, latLng, interest])
 
   const getPosition = () => {
@@ -42,6 +40,12 @@ function Map(props) {
     }
   }
 
+  const saveHandler = () => {
+    const savedPlaceName = clickedPlace.name
+    const savedPlaceAddress = clickedPlace.location.formattedAddress.join(', ')
+    props.dispatch(savePlace(savedPlaceName, savedPlaceAddress))
+  }
+
   const getCoordinates = (position) => {
     setLatLng({
       lat: position.coords.latitude,
@@ -49,20 +53,17 @@ function Map(props) {
     })
   }
 
-  const saveHandler = () => {
-    const savedPlaceName = clickedPlace.name
-    const savedPlaceAddress = clickedPlace.address
-    props.dispatch(savePlace(savedPlaceName, savedPlaceAddress));
-    props.dispatch(fetchSavedPlaces());
-  }
-
   const handleCityChange = (e) => {
-    setCity(e.target.value);
-    panMap(e.target.value);
+    setCity(e.target.value)
+    panMap(e.target.value)
   }
 
-  const handleInterestChange = (e) => {
-    setInterest(e.target.value);
+  const test = () => {
+    if (props.newPlace.exists === clickedPlace.location.formattedAddress.join(', ')) {
+      return <h2>Already Saved</h2>
+    } else if (props.newPlace.exists !== clickedPlace.location.formattedAddress.join(', ')) {
+      return <h2>Saved</h2>
+    }
   }
 
   const panMap = (pos) => {
@@ -75,6 +76,10 @@ function Map(props) {
     } else if (pos === 'Auckland') {
       setLatLng({ lat: -36.848461, lng: 174.763336 });
     }
+  }
+
+  const handleInterestChange = (e) => {
+    setInterest(e.target.value)
   }
 
   const { isLoaded, loadError } = useLoadScript({
@@ -126,12 +131,7 @@ function Map(props) {
             key={markedPlace.id}
             position={{ lat: markedPlace.location.lat, lng: markedPlace.location.lng }}
             onClick={() => {
-              setClickedPlace({
-                id: markedPlace.id,
-                name: markedPlace.name,
-                location: markedPlace.location,
-                address: markedPlace.location.formattedAddress.join(', ')
-              });
+              setClickedPlace(markedPlace);
             }}
           />
         ))}
@@ -148,30 +148,7 @@ function Map(props) {
             <div className='infoWindow'>
               <h2>{clickedPlace.name}</h2>
               <h2>{clickedPlace.location.formattedAddress.join(', ')}</h2>
-
-              {
-                props.savedPlaces.some(el => el.address === clickedPlace.address) ? <h3>Already Saved</h3> : <button onClick={saveHandler} >Save</button>}
-
-
-              {/* {
-                [
-                  {
-                    "id": 1,
-                    "name": "Little Bird Unbakery",
-                    "address": "1a Summer St (Ponsonby Road), Ponsonby, New Zealand"
-                  },
-                  {
-                    "id": 2,
-                    "name": "Chocolate Boutique",
-                    "address": "323 Parnell Rd, Parnell 1052, New Zealand"
-                  },
-                  {
-                    "id": 3,
-                    "name": "Twenty Three",
-                    "address": "23 Mt Eden Rd (at Nikau St), Auckland, New Zealand"
-                  }
-                ].some(el => el.address === clickedPlace.address) ? <h3>Already Saved</h3> : <button onClick={saveHandler} >Save</button>} */}
-
+              <button onClick={saveHandler} >Save</button>
             </div>
 
           </InfoWindow>
@@ -183,10 +160,10 @@ function Map(props) {
 
 function mapStateToProps(globalState) {
   const places = globalState.places.map(el => el.venue)
-  const savedPlaces = globalState.savedPlaces
+  const newPlace = globalState.newPlace
   return {
     places,
-    savedPlaces
+    newPlace
   }
 }
 

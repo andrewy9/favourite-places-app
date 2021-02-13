@@ -1,11 +1,10 @@
 import { getFruits } from '../apis/fruits'
 import { getFourSquare } from '../apis/fourSquare'
-import { getSavedPlaces, postSavedPlace } from '../apis/savedPlaces'
+import { postSavedPlace } from '../apis/savedPlaces'
 
 export const SET_FRUITS = 'SET_FRUITS'
 export const SET_PLACES = 'SET_PLACES'
 export const ADD_PLACE = 'ADD_PLACE'
-export const SET_SAVED_PLACES = 'SET_SAVED_PLACES'
 
 // FourSquares Actions
 export function setPlaces(places) {
@@ -26,28 +25,10 @@ export function fetchFourSquare(position, interest) {
 }
 
 //SavedPlaces Actions
-export function setSavedPlaces(savedPlaces) {
-  return {
-    type: SET_SAVED_PLACES,
-    savedPlaces
-  }
-}
-
-export function fetchSavedPlaces() {
-  console.log('fetching saved places')
-  return dispatch => {
-    getSavedPlaces()
-      .then(savedPlaces => {
-        console.log(savedPlaces)
-        dispatch(setSavedPlaces(savedPlaces))
-      })
-  }
-}
-
-export function addPlace(savedPlaces) {
+export function addPlace(place) {
   return {
     type: ADD_PLACE,
-    savedPlaces
+    place
   }
 }
 
@@ -55,26 +36,26 @@ export function addSavedPlace(savedPlaceName, savedPlaceAddress) {
   console.log(savedPlaceName, savedPlaceAddress)
   return dispatch => {
     postSavedPlace(savedPlaceName, savedPlaceAddress)
-      .then(savedPlace => {
-        dispatch(addPlace(savedPlace))
+      .then(place => {
+        dispatch(addPlace(place))
       })
   }
 }
 
-// // DB
-// export function setFruits(fruits) {
-//   return {
-//     type: SET_FRUITS,
-//     fruits
-//   }
-// }
+// DB
+export function setFruits(fruits) {
+  return {
+    type: SET_FRUITS,
+    fruits
+  }
+}
 
-// export function fetchFruits() {
-//   return dispatch => {
-//     return getFruits()
-//       .then(fruits => {
-//         dispatch(setFruits(fruits))
-//         return null
-//       })
-//   }
-// }
+export function fetchFruits() {
+  return dispatch => {
+    return getFruits()
+      .then(fruits => {
+        dispatch(setFruits(fruits))
+        return null
+      })
+  }
+}
