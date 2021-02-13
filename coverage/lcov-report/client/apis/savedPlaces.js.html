@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for server/db/savedPlaces.js</title>
+    <title>Code coverage report for client/apis/savedPlaces.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">server/db</a> savedPlaces.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">client/apis</a> savedPlaces.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">14.29% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/10</span>
+                <span class='fraction'>1/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">14.29% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/10</span>
+                <span class='fraction'>1/7</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -79,70 +79,49 @@
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const connection = require('./connection')
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import request from 'superagent'
 &nbsp;
-const getSavedPlaces = <span class="fstat-no" title="function not covered" >(d</span>b = <span class="branch-0 cbranch-no" title="branch not covered" >connection)</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >  return db('savedPlaces').select()</span>
+const rootUrl = '/api/v1'
+&nbsp;
+export function <span class="fstat-no" title="function not covered" >getSavedPlaces(</span>) {
+<span class="cstat-no" title="statement not covered" >  return request</span>
+    .get(rootUrl + '/savedPlaces')
+    .then(<span class="fstat-no" title="function not covered" >re</span>s =&gt; {
+<span class="cstat-no" title="statement not covered" >      console.log(res.body)</span>
+<span class="cstat-no" title="statement not covered" >      return res.body</span>
+    })
 }
 &nbsp;
-const getSavedPlacesById = <span class="fstat-no" title="function not covered" >(i</span>d, db = <span class="branch-0 cbranch-no" title="branch not covered" >connection)</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >  return db('savedPlaces')</span>
-    .select()
-    .where('id', id)
-}
-&nbsp;
-const postSavedPlace = <span class="fstat-no" title="function not covered" >(n</span>ame, address, db = <span class="branch-0 cbranch-no" title="branch not covered" >connection)</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >  return db('savedPlaces')</span>
-    .insert({ name, address })
-}
-&nbsp;
-const deleteSavedPlace = <span class="fstat-no" title="function not covered" >(i</span>d, db = <span class="branch-0 cbranch-no" title="branch not covered" >connection)</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >  return db('savedPlaces')</span>
-    .delete()
-    .where('id', id)
-}
-&nbsp;
-module.exports = {
-  getSavedPlaces,
-  getSavedPlacesById,
-  postSavedPlace,
-  deleteSavedPlace
+export function <span class="fstat-no" title="function not covered" >postSavedPlace(</span>savedPlaceName, savedPlaceAddress) {
+<span class="cstat-no" title="statement not covered" >  return request</span>
+    .post(rootUrl + '/savedPlaces')
+    .send({ savedPlaceName, savedPlaceAddress })
+    .then(<span class="fstat-no" title="function not covered" >re</span>s =&gt; {
+<span class="cstat-no" title="statement not covered" >      console.log(res.body)</span>
+<span class="cstat-no" title="statement not covered" >      return res.body</span>
+    })
 }
 &nbsp;</pre></td></tr></table></pre>
 
