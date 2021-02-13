@@ -5,7 +5,8 @@ const router = express.Router()
 router.get('/', (req, res) => {
   db.getSavedPlaces()
     .then(results => {
-      res.json({ results })
+      console.log(results)
+      res.json(results)
     })
     .catch(err => {
       console.log(err)
@@ -19,7 +20,7 @@ router.get('/:id', (req, res) => {
     .then(results => {
       const found = results.some(el => el.id === parseInt(id))
       if (found) {
-        res.json({ results })
+        res.json(results)
       } else {
         console.log(found)
         res.status(400).json({ msg: 'the id does not exist' })
@@ -38,14 +39,12 @@ router.post('/', (req, res) => {
       let found = results.some(el => el.address === savedPlaceAddress)
       if (!found) {
         db.postSavedPlace(savedPlaceName, savedPlaceAddress)
-          .then(result => {
-            db.getSavedPlacesById(result)
-              .then(newPlace => {
-                res.json({ newPlace })
-              })
+          .then((result) => {
+            res.status(201)
           })
       } else {
-        res.json({ exists: savedPlaceAddress, msg: 'this place is already saved' })
+        console.log('oopsie post')
+        res.status(400).json({ exists: savedPlaceAddress, msg: 'This place is already saved' })
       }
     })
     .catch(err => {
