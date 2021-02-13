@@ -61,20 +61,20 @@ export function addSavedPlace(savedPlaceName, savedPlaceAddress) {
   }
 }
 
-// DB
-export function setFruits(fruits) {
-  return {
-    type: SET_FRUITS,
-    fruits
-  }
-}
+// // DB
+// export function setFruits(fruits) {
+//   return {
+//     type: SET_FRUITS,
+//     fruits
+//   }
+// }
 
-export function fetchFruits() {
-  return dispatch => {
-    return getFruits()
-      .then(fruits => {
-        dispatch(setFruits(fruits))
-        return null
-      })
-  }
-}
+// export function fetchFruits() {
+//   return dispatch => {
+//     return getFruits()
+//       .then(fruits => {
+//         dispatch(setFruits(fruits))
+//         return null
+//       })
+//   }
+// }

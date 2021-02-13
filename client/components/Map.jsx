@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api'
-import { fetchFourSquare, fetchFruits, fetchSavedPlaces, addSavedPlace as savePlace } from '../actions'
+import { fetchFourSquare, fetchSavedPlaces, addSavedPlace as savePlace } from '../actions'
 
 // import {formatRelative} from "date-fns"
 
@@ -30,8 +30,7 @@ function Map(props) {
     } else {
       props.dispatch(fetchFourSquare(city, interest))
     }
-    // props.dispatch(fetchSavedPlaces())
-    props.dispatch(fetchFruits())
+    props.dispatch(fetchSavedPlaces())
   }, [city, latLng, interest])
 
   const getPosition = () => {
@@ -50,35 +49,20 @@ function Map(props) {
     })
   }
 
-  async function saveHandler() {
+  const saveHandler = () => {
     const savedPlaceName = clickedPlace.name
-    const savedPlaceAddress = clickedPlace.location.formattedAddress.join(', ')
-    await props.dispatch(savePlace(savedPlaceName, savedPlaceAddress));
-
-    // if (props.savedPlaces.exists === clickedPlace.location.formattedAddress.join(', ')) {
-    //   setAlreadySaved(true)
-    //   console.log('already true')
-    //   setTimeout(() => {
-    //     setAlreadySaved(false)
-    //     console.log('already false')
-    //   }, 2500);
-    // } else if (props.savedPlaces.exists !== clickedPlace.location.formattedAddress.join(', ')) {
-    //   setSaveStatus(true)
-    //   console.log('savetrue')
-    //   setTimeout(() => {
-    //     setSaveStatus(false)
-    //     console.log('save false')
-    //   }, 2500);
-    // }
+    const savedPlaceAddress = clickedPlace.address
+    props.dispatch(savePlace(savedPlaceName, savedPlaceAddress));
+    props.dispatch(fetchSavedPlaces());
   }
 
   const handleCityChange = (e) => {
-    setCity(e.target.value)
-    panMap(e.target.value)
+    setCity(e.target.value);
+    panMap(e.target.value);
   }
 
   const handleInterestChange = (e) => {
-    setInterest(e.target.value)
+    setInterest(e.target.value);
   }
 
   const panMap = (pos) => {
@@ -142,7 +126,12 @@ function Map(props) {
             key={markedPlace.id}
             position={{ lat: markedPlace.location.lat, lng: markedPlace.location.lng }}
             onClick={() => {
-              setClickedPlace(markedPlace);
+              setClickedPlace({
+                id: markedPlace.id,
+                name: markedPlace.name,
+                location: markedPlace.location,
+                address: markedPlace.location.formattedAddress.join(', ')
+              });
             }}
           />
         ))}
@@ -159,9 +148,30 @@ function Map(props) {
             <div className='infoWindow'>
               <h2>{clickedPlace.name}</h2>
               <h2>{clickedPlace.location.formattedAddress.join(', ')}</h2>
-              {/* {props.savedPlaces.exists === clickedPlace.location.formattedAddress.join(', ') ? */}
-              {/* null : <button onClick={saveHandler} >Save</button>} */}
-              {saveStatus ? <h3>Saved!</h3> : null}
+
+              {
+                props.savedPlaces.some(el => el.address === clickedPlace.address) ? <h3>Already Saved</h3> : <button onClick={saveHandler} >Save</button>}
+
+
+              {/* {
+                [
+                  {
+                    "id": 1,
+                    "name": "Little Bird Unbakery",
+                    "address": "1a Summer St (Ponsonby Road), Ponsonby, New Zealand"
+                  },
+                  {
+                    "id": 2,
+                    "name": "Chocolate Boutique",
+                    "address": "323 Parnell Rd, Parnell 1052, New Zealand"
+                  },
+                  {
+                    "id": 3,
+                    "name": "Twenty Three",
+                    "address": "23 Mt Eden Rd (at Nikau St), Auckland, New Zealand"
+                  }
+                ].some(el => el.address === clickedPlace.address) ? <h3>Already Saved</h3> : <button onClick={saveHandler} >Save</button>} */}
+
             </div>
 
           </InfoWindow>
