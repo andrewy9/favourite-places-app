@@ -2,6 +2,15 @@ import request from 'superagent'
 
 const rootUrl = '/api/v1'
 
+export function getSavedPlaces() {
+  return request
+    .get(rootUrl + '/savedPlaces')
+    .then(res => {
+      console.log(res.body)
+      return res.body
+    })
+}
+
 export function postSavedPlace(savedPlaceName, savedPlaceAddress) {
   return request
     .post(rootUrl + '/savedPlaces')

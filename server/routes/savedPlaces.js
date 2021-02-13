@@ -45,7 +45,7 @@ router.post('/', (req, res) => {
               })
           })
       } else {
-        res.json({ exists: savedPlaceAddress, msg: 'this place is already saved' })
+        res.status(400).json({ exists: savedPlaceAddress, msg: 'this place is already saved' })
       }
     })
     .catch(err => {

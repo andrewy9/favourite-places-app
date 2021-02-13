@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api'
-import { fetchFourSquare, fetchFruits, addSavedPlace as savePlace } from '../actions'
+import { fetchFourSquare, fetchFruits, fetchSavedPlaces, addSavedPlace as savePlace } from '../actions'
 
 // import {formatRelative} from "date-fns"
 
@@ -21,6 +21,8 @@ function Map(props) {
   const [clickedPlace, setClickedPlace] = useState('') // The place you just clicked
   const [city, setCity] = useState('Auckland') // City where the map will search places around
   const [latLng, setLatLng] = useState({ lat: -36.848461, lng: 174.763336 }) // Coorinate where the map will search places around
+  const [saveStatus, setSaveStatus] = useState(false)
+
 
   useEffect(() => {
     if (!city) {
@@ -28,6 +30,7 @@ function Map(props) {
     } else {
       props.dispatch(fetchFourSquare(city, interest))
     }
+    // props.dispatch(fetchSavedPlaces())
     props.dispatch(fetchFruits())
   }, [city, latLng, interest])
 
@@ -40,12 +43,6 @@ function Map(props) {
     }
   }
 
-  const saveHandler = () => {
-    const savedPlaceName = clickedPlace.name
-    const savedPlaceAddress = clickedPlace.location.formattedAddress.join(', ')
-    props.dispatch(savePlace(savedPlaceName, savedPlaceAddress))
-  }
-
   const getCoordinates = (position) => {
     setLatLng({
       lat: position.coords.latitude,
@@ -53,17 +50,35 @@ function Map(props) {
     })
   }
 
+  async function saveHandler() {
+    const savedPlaceName = clickedPlace.name
+    const savedPlaceAddress = clickedPlace.location.formattedAddress.join(', ')
+    await props.dispatch(savePlace(savedPlaceName, savedPlaceAddress));
+
+    // if (props.savedPlaces.exists === clickedPlace.location.formattedAddress.join(', ')) {
+    //   setAlreadySaved(true)
+    //   console.log('already true')
+    //   setTimeout(() => {
+    //     setAlreadySaved(false)
+    //     console.log('already false')
+    //   }, 2500);
+    // } else if (props.savedPlaces.exists !== clickedPlace.location.formattedAddress.join(', ')) {
+    //   setSaveStatus(true)
+    //   console.log('savetrue')
+    //   setTimeout(() => {
+    //     setSaveStatus(false)
+    //     console.log('save false')
+    //   }, 2500);
+    // }
+  }
+
   const handleCityChange = (e) => {
     setCity(e.target.value)
     panMap(e.target.value)
   }
 
-  const test = () => {
-    if (props.newPlace.exists === clickedPlace.location.formattedAddress.join(', ')) {
-      return <h2>Already Saved</h2>
-    } else if (props.newPlace.exists !== clickedPlace.location.formattedAddress.join(', ')) {
-      return <h2>Saved</h2>
-    }
+  const handleInterestChange = (e) => {
+    setInterest(e.target.value)
   }
 
   const panMap = (pos) => {
@@ -76,10 +91,6 @@ function Map(props) {
     } else if (pos === 'Auckland') {
       setLatLng({ lat: -36.848461, lng: 174.763336 });
     }
-  }
-
-  const handleInterestChange = (e) => {
-    setInterest(e.target.value)
   }
 
   const { isLoaded, loadError } = useLoadScript({
@@ -148,7 +159,9 @@ function Map(props) {
             <div className='infoWindow'>
               <h2>{clickedPlace.name}</h2>
               <h2>{clickedPlace.location.formattedAddress.join(', ')}</h2>
-              <button onClick={saveHandler} >Save</button>
+              {/* {props.savedPlaces.exists === clickedPlace.location.formattedAddress.join(', ') ? */}
+              {/* null : <button onClick={saveHandler} >Save</button>} */}
+              {saveStatus ? <h3>Saved!</h3> : null}
             </div>
 
           </InfoWindow>
@@ -160,10 +173,10 @@ function Map(props) {
 
 function mapStateToProps(globalState) {
   const places = globalState.places.map(el => el.venue)
-  const newPlace = globalState.newPlace
+  const savedPlaces = globalState.savedPlaces
   return {
     places,
-    newPlace
+    savedPlaces
   }
 }
 
