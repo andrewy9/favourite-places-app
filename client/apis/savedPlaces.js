@@ -20,3 +20,8 @@ export function postSavedPlace(savedPlaceName, savedPlaceAddress) {
       return res.body
     })
 }
+
+export function deleteSavedPlace(id) {
+  return request
+    .delete(rootUrl + `/savedPlaces/${id}`)
+}

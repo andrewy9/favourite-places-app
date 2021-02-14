@@ -1,16 +1,28 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import SavedPlace from './SavedPlace'
 
 function SavedPlaces(props) {
   return (
-    <h1>test</h1>
+    <div className='savedPlaces'>
+      <h1>Saved Places</h1>
+      <ul>
+        {props.savedPlaces.map(el =>
+          <li>
+            <SavedPlace place={el} />
+          </li>
+        )}
+      </ul>
+    </div>
   )
 }
 
 function mapStateToProps(globalState) {
-  console.log(globalState)
+  const places = globalState.places.map(el => el.venue)
+  const savedPlaces = globalState.savedPlaces
   return {
-    globalState
+    places,
+    savedPlaces
   }
 }
 

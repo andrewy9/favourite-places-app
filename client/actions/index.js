@@ -1,11 +1,12 @@
 import { getFruits } from '../apis/fruits'
 import { getFourSquare } from '../apis/fourSquare'
-import { getSavedPlaces, postSavedPlace } from '../apis/savedPlaces'
+import { getSavedPlaces, postSavedPlace, deleteSavedPlace } from '../apis/savedPlaces'
 
 export const SET_FRUITS = 'SET_FRUITS'
 export const SET_PLACES = 'SET_PLACES'
 export const ADD_PLACE = 'ADD_PLACE'
 export const SET_SAVED_PLACES = 'SET_SAVED_PLACES'
+export const DELETE_SAVED_PLACE = 'DELETE_SAVED_PLACE'
 
 // FourSquares Actions
 export function setPlaces(places) {
@@ -57,6 +58,22 @@ export function addSavedPlace(savedPlaceName, savedPlaceAddress) {
     postSavedPlace(savedPlaceName, savedPlaceAddress)
       .then(savedPlace => {
         dispatch(addPlace(savedPlace))
+      })
+  }
+}
+
+export function deletePlace(id) {
+  return {
+    type: DELETE_SAVED_PLACE,
+    id
+  }
+}
+
+export function removeSavedPlace(id) {
+  return dispatch => {
+    deleteSavedPlace(id)
+      .then(() => {
+        dispatch(deletePlace(id))
       })
   }
 }

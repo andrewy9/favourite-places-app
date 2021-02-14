@@ -4,3 +4,23 @@ html,
 body {
   font-family: 'Montserrat', sans-serif;
 }
+
+ul {
+  list-style: none;
+  overflow-y: auto;
+  padding-left: 1em;
+}
+
+.interface {
+  display:flex;
+  flex-wrap: wrap;
+}
+
+.savedPlaces {
+  padding: 0% 1%;
+  overflow-y: auto;
+}
+
+.savedPlace {
+  margin: 1em 0em;
+}
