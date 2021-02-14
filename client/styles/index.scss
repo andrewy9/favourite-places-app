@@ -4,3 +4,12 @@ html,
 body {
   font-family: 'Montserrat', sans-serif;
 }
+
+.interface {
+  display:flex;
+  flex-wrap: wrap;
+}
+
+.savedPlaces {
+  padding: 0% 1%
+}

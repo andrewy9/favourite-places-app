@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { HashRouter as Router, Route } from 'react-router-dom'
 
 import Map from './Map'
-import SavedPlaces from './SavedPlaces'
 
 export class App extends React.Component {
   render() {
@@ -11,7 +10,6 @@ export class App extends React.Component {
       <Router>
         <div className='app'>
           <Route exact path='/' component={Map} />
-          <Route path='/SavedPlaces' component={SavedPlaces} />
         </div>
       </Router>
     )

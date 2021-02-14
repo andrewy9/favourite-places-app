@@ -3,14 +3,26 @@ import { connect } from 'react-redux'
 
 function SavedPlaces(props) {
   return (
-    <h1>test</h1>
+    <div className='savedPlaces'>
+      <h1>Saved Places</h1>
+      <ul>
+        {props.savedPlaces.map(el =>
+          <li>
+            {el.name} <br />
+            {el.address}
+          </li>
+        )}
+      </ul>
+    </div>
   )
 }
 
 function mapStateToProps(globalState) {
-  console.log(globalState)
+  const places = globalState.places.map(el => el.venue)
+  const savedPlaces = globalState.savedPlaces
   return {
-    globalState
+    places,
+    savedPlaces
   }
 }
 
