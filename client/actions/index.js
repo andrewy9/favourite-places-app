@@ -6,6 +6,14 @@ export const SET_FRUITS = 'SET_FRUITS'
 export const SET_PLACES = 'SET_PLACES'
 export const ADD_PLACE = 'ADD_PLACE'
 export const SET_SAVED_PLACES = 'SET_SAVED_PLACES'
+export const SET_CLICKED = 'SET_CLICKED'
+
+export function setClickedPlace(clickedPlace) {
+  return {
+    type: SET_CLICKED,
+    clickedPlace
+  }
+}
 
 // FourSquares Actions
 export function setPlaces(places) {

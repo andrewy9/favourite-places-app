@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api'
 import { fetchFourSquare, fetchSavedPlaces, addSavedPlace as savePlace } from '../actions'
+import MapInfoWindow from "./MapInfoWindow";
 
 // import {formatRelative} from "date-fns"
 
@@ -22,7 +23,6 @@ function Map(props) {
   const [city, setCity] = useState('Auckland') // City where the map will search places around
   const [latLng, setLatLng] = useState({ lat: -36.848461, lng: 174.763336 }) // Coorinate where the map will search places around
   const [saveStatus, setSaveStatus] = useState(false)
-
 
   useEffect(() => {
     if (!city) {
@@ -135,27 +135,9 @@ function Map(props) {
             }}
           />
         ))}
-        {clickedPlace ? (
-          <InfoWindow
-            position={{
-              lat: clickedPlace.location.lat,
-              lng: clickedPlace.location.lng
-            }}
-            onCloseClick={() => {
-              setClickedPlace('');
-            }}
-          >
-            <div className='infoWindow'>
-              <h2>{clickedPlace.name}</h2>
-              <h2>{clickedPlace.location.formattedAddress.join(', ')}</h2>
-
-              {
-                props.savedPlaces.some(el => el.address === clickedPlace.address) ? <h3>Already Saved</h3> : <button onClick={saveHandler} >Save</button>}
-
-            </div>
-
-          </InfoWindow>
-        ) : null}
+        {/* {clickedPlace ? ( */}
+        <MapInfoWindow clickedPlace={clickedPlace} />
+        {/* ) : null} */}
       </GoogleMap>
     </div>
   )
@@ -171,3 +153,23 @@ function mapStateToProps(globalState) {
 }
 
 export default connect(mapStateToProps)(Map)
+
+// <InfoWindow
+          //   position={{
+          //     lat: clickedPlace.location.lat,
+          //     lng: clickedPlace.location.lng
+          //   }}
+          //   onCloseClick={() => {
+          //     setClickedPlace('');
+          //   }}
+          // >
+          //   <div className='infoWindow'>
+          //     <h2>{clickedPlace.name}</h2>
+          //     <h2>{clickedPlace.location.formattedAddress.join(', ')}</h2>
+
+          //     {
+          //       props.savedPlaces.some(el => el.address === clickedPlace.address) ? <h3>Already Saved</h3> : <button onClick={saveHandler} >Save</button>}
+
+          //   </div>
+
+          // </InfoWindow>
