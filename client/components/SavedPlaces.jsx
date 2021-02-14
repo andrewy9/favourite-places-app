@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import SavedPlace from './SavedPlace'
 
 function SavedPlaces(props) {
   return (
@@ -8,8 +9,7 @@ function SavedPlaces(props) {
       <ul>
         {props.savedPlaces.map(el =>
           <li>
-            {el.name} <br />
-            {el.address}
+            <SavedPlace place={el} />
           </li>
         )}
       </ul>
