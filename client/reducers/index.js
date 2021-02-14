@@ -7,5 +7,5 @@ import savedPlaces from './savedPlaces'
 export default combineReducers({
   fruits,
   places,
-  savedPlaces
+  savedPlaces,
 })
