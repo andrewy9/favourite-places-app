@@ -6,7 +6,6 @@ export function getSavedPlaces() {
   return request
     .get(rootUrl + '/savedPlaces')
     .then(res => {
-      console.log(res.body)
       return res.body
     })
 }
@@ -16,7 +15,6 @@ export function postSavedPlace(savedPlaceName, savedPlaceAddress) {
     .post(rootUrl + '/savedPlaces')
     .send({ savedPlaceName, savedPlaceAddress })
     .then(res => {
-      console.log(res.body)
       return res.body
     })
 }
