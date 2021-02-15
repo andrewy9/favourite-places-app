@@ -35,11 +35,9 @@ export function setSavedPlaces(savedPlaces) {
 }
 
 export function fetchSavedPlaces() {
-  console.log('fetching saved places')
   return dispatch => {
     getSavedPlaces()
       .then(savedPlaces => {
-        console.log(savedPlaces)
         dispatch(setSavedPlaces(savedPlaces))
       })
   }
@@ -53,7 +51,6 @@ export function addPlace(savedPlaces) {
 }
 
 export function addSavedPlace(savedPlaceName, savedPlaceAddress) {
-  console.log(savedPlaceName, savedPlaceAddress)
   return dispatch => {
     postSavedPlace(savedPlaceName, savedPlaceAddress)
       .then(savedPlace => {

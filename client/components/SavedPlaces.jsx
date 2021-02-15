@@ -8,7 +8,7 @@ function SavedPlaces(props) {
       <h1>Saved Places</h1>
       <ul>
         {props.savedPlaces.map(el =>
-          <li>
+          <li key={el.id}>
             <SavedPlace place={el} />
           </li>
         )}
