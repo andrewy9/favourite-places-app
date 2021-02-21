@@ -6,15 +6,6 @@ const getSavedPlaces = (db = connection) => {
 
 const getSavedPlacesById = (id, db = connection) => {
   return db('SavedPlaces')
-    .join('Comments', 'savedPlaces_id', 'SavedPlaces.id')
-    .select(
-      'SavedPlaces.id as id',
-      'name',
-      'address',
-      'Comments.id as comment_id',
-      'date_posted',
-      'comment'
-    )
     .where('SavedPlaces.id', id)
 }
 
