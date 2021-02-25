@@ -23,6 +23,13 @@ function Map(props) {
   const [city, setCity] = useState('Auckland') // City where the map will search places around
   const [latLng, setLatLng] = useState({ lat: -36.848461, lng: 174.763336 }) // Coorinate where the map will search places around
 
+  const [state, setState] = useStaet({
+    interest: 'coffee',
+    clickedPlace: '',
+    city: 'city',
+    latLng: { lat: -36.848461, lng: 174.763336 },
+  })
+
   useEffect(() => {
     if (!city) {
       props.dispatch(fetchFourSquare(latLng, interest))
@@ -49,9 +56,7 @@ function Map(props) {
   }
 
   const saveHandler = () => {
-    const savedPlaceName = clickedPlace.name
-    const savedPlaceAddress = clickedPlace.address
-    props.dispatch(savePlace(savedPlaceName, savedPlaceAddress));
+    props.dispatch(savePlace(clickedPlace.name, clickedPlace.address));
     props.dispatch(fetchSavedPlaces());
   }
 
@@ -61,7 +66,7 @@ function Map(props) {
   }
 
   const handleInterestChange = (e) => {
-    setInterest(e.target.value);
+    setState({ interest: e.target.value });
   }
 
   const panMap = (pos) => {
