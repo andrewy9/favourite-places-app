@@ -5,6 +5,7 @@ const request = require('superagent')
 
 const fruitRoutes = require('./routes/fruits')
 const savedPlacesRoutes = require('./routes/savedPlaces')
+const comments = require('./routes/comments')
 
 const server = express()
 
@@ -13,6 +14,7 @@ server.use(express.static(path.join(__dirname, 'public')))
 
 server.use('/api/v1/fruits', fruitRoutes)
 server.use('/api/v1/savedPlaces', savedPlacesRoutes)
+server.use('/api/v1/comments', comments)
 
 server.get('/api/v1/fourSquare/:position/:interest', (req, res) => {
   const position = req.params.position

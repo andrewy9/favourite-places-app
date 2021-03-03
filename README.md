@@ -1,4 +1,4 @@
-# Full-stack React project
+# Full-stack React project (work in progress)
 An application which provides visual suggestions of multiple venues to visit based on the users current location and interests.
 The application will also allow the user to to create a profile and then log in so that they can save and manage their favourite places.
 
