@@ -40,7 +40,7 @@
     "@reach/combobox": "^0.12.1",
     "@react-google-maps/api": "^2.1.1",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "knex": "^0.21.19",
     "nock": "^13.0.11",
     "pg": "^8.5.1",
